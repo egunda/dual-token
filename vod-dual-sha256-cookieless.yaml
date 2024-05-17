@@ -1,0 +1,71 @@
+edgeSslCertificates:
+- projects/my-project/locations/global/certificates/my-cert
+logConfig:
+  enable: true
+  sampleRate: 1.0
+name: projects/my-project/locations/global/edgeCacheServices/dual-sha256-cookieless
+requireTls: true
+routing:
+  hostRules:
+  - hosts:
+    - vod.cdntest.in
+    pathMatcher: path-matcher-0
+  pathMatchers:
+  - name: path-matcher-0
+    routeRules:
+    - description: DualTokenPOC
+      headerAction:
+        responseHeadersToAdd:
+        - headerName: version
+          headerValue: '1'
+      matchRules:
+      - pathTemplateMatch: /**manifest.m3u8
+      origin: projects/12345678912/locations/global/edgeCacheOrigins/steel-origin
+      priority: 1
+      routeAction:
+        cdnPolicy:
+          addSignatures:
+            actions:
+            - GENERATE_TOKEN_HLS_COOKIELESS
+            copiedParameters:
+            - PathGlobs
+            - URLPrefix
+            keyset: mylongsecret
+            tokenQueryParameter: hdntl
+            tokenTtl: 86400s
+          cacheMode: CACHE_ALL_STATIC
+          signedRequestKeyset: shortnew
+          signedRequestMaximumExpirationTtl: 60s
+          signedRequestMode: REQUIRE_TOKENS
+          signedTokenOptions:
+            allowedSignatureAlgorithms:
+            - HMAC_SHA_256
+            tokenQueryParameter: hdnts
+    - description: ChildPlayList
+      matchRules:
+      - pathTemplateMatch: /**.m3u8
+      origin: projects/12345678912/locations/global/edgeCacheOrigins/steel-origin
+      priority: 2
+      routeAction:
+        cdnPolicy:
+          addSignatures:
+            actions:
+            - PROPAGATE_TOKEN_HLS_COOKIELESS
+            tokenQueryParameter: hdntl
+          cacheMode: CACHE_ALL_STATIC
+          signedRequestKeyset: mylongsecret
+          signedRequestMode: REQUIRE_TOKENS
+          signedTokenOptions:
+            tokenQueryParameter: hdntl
+    - description: tschunks
+      matchRules:
+      - pathTemplateMatch: /**.ts
+      origin: projects/12345678912/locations/global/edgeCacheOrigins/steel-origin
+      priority: 3
+      routeAction:
+        cdnPolicy:
+          cacheMode: CACHE_ALL_STATIC
+          signedRequestKeyset: mylongsecret
+          signedRequestMode: REQUIRE_TOKENS
+          signedTokenOptions:
+            tokenQueryParameter: hdntl
