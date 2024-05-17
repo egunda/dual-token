@@ -25,17 +25,17 @@ function sign_token($url_prefix, $base64_key, $algo, $expiration_time = null) {
 }
 
 // Ask user for inputs
-echo "Enter the URL prefix (e.g., https://dual.vivekanurag.demo.altostrat.com/tearsofsteel/): ";
+echo "Enter the URL prefix (e.g., https://vod.cdntest.in/tearsofsteel/): ";
 $up = trim(fgets(STDIN));
 
-echo "Enter the base64 key (e.g., LGRWQgV4nlRICQ2bqAJFKPkCiFCiS7u9gkca8b91MuY=): ";
+echo "Enter the base64 key (e.g., LGRWQgV4nlRIgjggklkhjkhljlkjkl;hkg91MuY=): ";
 $bk = trim(fgets(STDIN));
 
 echo "Enter expiration time in seconds (default is 60): ";
 $expiration_seconds_input = trim(fgets(STDIN));
 $expiration_seconds = $expiration_seconds_input ? intval($expiration_seconds_input) : 60;
 
-echo "Enter the complete URL (e.g., https://dual.vivekanurag.demo.altostrat.com/tearsofsteel/manifest.m3u8): ";
+echo "Enter the complete URL (e.g., https://vod.cdntest.in/tearsofsteel/manifest.m3u8): ";
 $url_input = trim(fgets(STDIN));
 
 // Calculate expiration time
