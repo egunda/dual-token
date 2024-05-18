@@ -1,4 +1,4 @@
-# This is a solution to Google Media CDN Dual Token demo.
+# Google Media CDN Dual Token - Setup and requited assets.
 
 ## Token generator Scripts for SHA256
 ### Python
