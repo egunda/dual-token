@@ -1,9 +1,9 @@
 edgeSslCertificates:
-- projects/my-project/locations/global/certificates/my-cert
+- projects/my-media-project/locations/global/certificates/my-cert
 logConfig:
   enable: true
   sampleRate: 1.0
-name: projects/my-project/locations/global/edgeCacheServices/dual-sha256-cookieless
+name: projects/my-media-project/locations/global/edgeCacheServices/dual-sha256-cookieless
 requireTls: true
 routing:
   hostRules:
@@ -17,7 +17,7 @@ routing:
       headerAction:
         responseHeadersToAdd:
         - headerName: version
-          headerValue: '1'
+          headerValue: '5'
       matchRules:
       - pathTemplateMatch: /**/manifest.m3u8
       origin: projects/12345678912/locations/global/edgeCacheOrigins/steel-origin
@@ -35,12 +35,22 @@ routing:
             tokenTtl: 86400s
           cacheMode: CACHE_ALL_STATIC
           signedRequestKeyset: shortnew
-          signedRequestMaximumExpirationTtl: 60s
+          signedRequestMaximumExpirationTtl: 86400s
           signedRequestMode: REQUIRE_TOKENS
           signedTokenOptions:
             allowedSignatureAlgorithms:
             - HMAC_SHA_256
             tokenQueryParameter: hdnts
+        corsPolicy:
+          allowHeaders:
+          - '*'
+          allowMethods:
+          - '*'
+          allowOrigins:
+          - '*'
+          exposeHeaders:
+          - '*'
+          maxAge: 600s
     - description: ChildPlayList
       matchRules:
       - pathTemplateMatch: /**.m3u8
@@ -52,11 +62,21 @@ routing:
             actions:
             - PROPAGATE_TOKEN_HLS_COOKIELESS
             tokenQueryParameter: hdntl
+          signedRequestMode: REQUIRE_TOKENS
           cacheMode: CACHE_ALL_STATIC
           signedRequestKeyset: mylongsecret
-          signedRequestMode: REQUIRE_TOKENS
           signedTokenOptions:
             tokenQueryParameter: hdntl
+        corsPolicy:
+          allowHeaders:
+          - '*'
+          allowMethods:
+          - '*'
+          allowOrigins:
+          - '*'
+          exposeHeaders:
+          - '*'
+          maxAge: 600s
     - description: tschunks
       matchRules:
       - pathTemplateMatch: /**.ts
@@ -69,3 +89,13 @@ routing:
           signedRequestMode: REQUIRE_TOKENS
           signedTokenOptions:
             tokenQueryParameter: hdntl
+        corsPolicy:
+          allowHeaders:
+          - '*'
+          allowMethods:
+          - '*'
+          allowOrigins:
+          - '*'
+          exposeHeaders:
+          - '*'
+          maxAge: 600s
