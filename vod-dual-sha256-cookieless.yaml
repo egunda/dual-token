@@ -19,7 +19,7 @@ routing:
         - headerName: version
           headerValue: '1'
       matchRules:
-      - pathTemplateMatch: /**manifest.m3u8
+      - pathTemplateMatch: /**/manifest.m3u8
       origin: projects/12345678912/locations/global/edgeCacheOrigins/steel-origin
       priority: 1
       routeAction:
