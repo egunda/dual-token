@@ -18,6 +18,10 @@ routing:
         responseHeadersToAdd:
         - headerName: version
           headerValue: '5'
+        - headerName: x-cache-status
+          headerValue: '{cdn_cache_status}'
+        - headerName: x-client-city
+          headerValue: '{client_city}'
       matchRules:
       - pathTemplateMatch: /**/manifest.m3u8
       origin: projects/12345678912/locations/global/edgeCacheOrigins/steel-origin
@@ -40,6 +44,8 @@ routing:
           signedTokenOptions:
             allowedSignatureAlgorithms:
             - HMAC_SHA_256
+            - ED25519
+            - HMAC_SHA1
             tokenQueryParameter: hdnts
         corsPolicy:
           allowHeaders:
