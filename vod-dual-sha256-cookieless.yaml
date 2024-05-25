@@ -39,7 +39,7 @@ routing:
             tokenTtl: 86400s
           cacheMode: CACHE_ALL_STATIC
           signedRequestKeyset: shortnew
-          signedRequestMaximumExpirationTtl: 86400s
+          signedRequestMaximumExpirationTtl: 60s
           signedRequestMode: REQUIRE_TOKENS
           signedTokenOptions:
             allowedSignatureAlgorithms:
